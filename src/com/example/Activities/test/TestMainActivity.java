@@ -7,6 +7,8 @@ import android.widget.EditText;
 import com.example.Activities.MainActivity;
 import com.example.Activities.UserHomeActivity;
 import com.example.moodle.R;
+import com.example.moodle.User;
+import com.example.moodle.test.Constants;
 import com.jayway.android.robotium.solo.Solo;
 
 public class TestMainActivity extends ActivityInstrumentationTestCase2{
@@ -46,18 +48,33 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2{
 		
 		//Wait until next activity starts
 		current = solo.getActivityMonitor().waitForActivity();
+		
+		//the token returned should match to that in the database
+		assertEquals("32cdc90dade4b960af613c3a70d36b1e",((UserHomeActivity)current).getUser().getToken());
+		
 		Class cu = current.getClass();
 		
 		//the UserHomeActivity should start
 		try {
 			Class next = Class.forName("com.example.Activities.UserHomeActivity");
+						
 			//The next activity should be the UserHomeActivity
 			assertEquals(next, cu);
+			
 		} catch (ClassNotFoundException e) {
 			//if UserHomeActivity class doesn't exist, fail
 			fail(e.toString());
 		}
 			
+	}
+	
+	//test the getSiteInfo function
+	public void testGetSiteInfo(){
+		Activity currrent = solo.getCurrentActivity();
+		User user = User.getInstance();
+		user.setToken(Constants.token);
+		((MainActivity)currrent).getSiteInfo();
+		assertEquals("u1", user.getUsername());
 	}
 	
 	@Override

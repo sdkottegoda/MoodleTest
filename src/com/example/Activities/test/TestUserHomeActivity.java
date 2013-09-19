@@ -1,8 +1,19 @@
 package com.example.Activities.test;
 
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import com.jayway.android.robotium.solo.Solo;
-import com.example.Activities.UserHomeActivity;
+import com.example.Activities.*;
+import com.example.moodle.App;
+import com.example.moodle.Client;
+import com.example.moodle.Course;
 import com.example.moodle.R;
+import com.example.moodle.User;
+import com.example.moodle.test.Constants;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,17 +43,36 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 	protected void setUp(){
 		//initiate a solo object before running the test class
 		solo = new Solo(getInstrumentation(),getActivity());
+		User user = User.getInstance();
+		user.setToken(Constants.token);
+		user.setID(3);
+		App.setDomainUrl("http://10.0.2.2/Moodle/moodle/");
 	}
 	
+	@BeforeClass
+	public void setUpClass(){
+
+	}
+
+	
 	//test what happens when the courses imageButton is clicked
+	@Test
 	public void testCoursesClicked(){
+		
 		//Courses has the index 2
 		solo.clickOnImageButton(2);
-		
+			
 		//Wait until next activity starts
 		Activity current = solo.getActivityMonitor().waitForActivity();
-		Class cu = current.getClass();
-				
+		Class<? extends Activity> cu = current.getClass();	
+		
+		//User u1 is enrolled in the courses with the following short names
+		String[] courses = new String[] {"DS2022","SE2012"};
+		ArrayList<Course> actual = User.getInstance().getCourses();
+		
+		for (int i=0;i<2;i++){
+			assertEquals(courses[i],actual.get(i).getModuleCode());
+		}
 		//the CoursesActivity should start
 		try {
 			Class next = Class.forName("com.example.Activities.CoursesActivity");
@@ -58,11 +88,11 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 	
 	//test what happens when the profile imageButton is clicked
 	public void testProfileClicked(){
-		//profile has the index 1
 		
+		//profile has the index 1
 		solo.clickOnImageButton(1);
 		//Wait until next activity starts
-			Activity current = solo.getActivityMonitor().waitForActivity();
+			/*Activity current = solo.getActivityMonitor().waitForActivity();
 			Class cu = current.getClass();
 				
 			//the ProfileActivity should start
@@ -73,7 +103,9 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 			} catch (ClassNotFoundException e) {
 				//if ProfileActivity class doesn't exist, fail
 				fail(e.toString());
-			}
+			}*/
+			
+			
 	}
 	
 	@Override
