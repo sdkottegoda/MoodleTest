@@ -43,7 +43,11 @@ public class TestClient extends AndroidTestCase{
 
 	@Override
 	protected void setUp(){
-		
+		App.setDomainUrl(Constants.domainName);
+		User user = User.getInstance();
+		user.setToken(Constants.token);
+		user.setID(3);
+
 	}
 	
 	@Override
@@ -67,12 +71,8 @@ public class TestClient extends AndroidTestCase{
 	
 	public void testGetCourses(){
 
-		App.setDomainUrl(Constants.domainName);
-		Client client=Client.getInstance();
-		User user = User.getInstance();
-		user.setToken(Constants.token);
-		user.setID(3);
-		JSONObject response = client.getCourses();
+		JSONObject response = Client.getInstance().getCourses();
+		
 		try {
 			ArrayList<String> courses=new ArrayList<String>();
 			JSONArray coursesArray = response.getJSONArray("courses");
@@ -83,6 +83,21 @@ public class TestClient extends AndroidTestCase{
 			assertEquals("DS2022", courses.get(0));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
+			fail(e.toString());
+		}
+	}
+	
+	public void testGetCourseContent(){
+		
+	}
+	
+	public void testGetMyProfile(){
+		JSONObject response = Client.getInstance().getMyProfile();
+		try {
+			assertEquals("u1 u", response.getString("fullname"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			fail(e.toString());
 		}
 	}

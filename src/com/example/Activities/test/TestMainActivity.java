@@ -47,12 +47,14 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2{
 		solo.clickOnButton("Login");		
 		
 		//Wait until next activity starts
-		current = solo.getActivityMonitor().waitForActivity();
+		//solo.waitForActivity("UserHomeActivity",2000);
+		solo.getActivityMonitor().waitForActivityWithTimeout(1000);
+		solo.assertCurrentActivity(solo.getCurrentActivity().toString(), UserHomeActivity.class);
 		
 		//the token returned should match to that in the database
-		assertEquals("32cdc90dade4b960af613c3a70d36b1e",((UserHomeActivity)current).getUser().getToken());
+		assertEquals("32cdc90dade4b960af613c3a70d36b1e",(User.getInstance().getToken()));
 		
-		Class cu = current.getClass();
+		/*Class cu = current.getClass();
 		
 		//the UserHomeActivity should start
 		try {
@@ -64,7 +66,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2{
 		} catch (ClassNotFoundException e) {
 			//if UserHomeActivity class doesn't exist, fail
 			fail(e.toString());
-		}
+		}*/
 			
 	}
 	

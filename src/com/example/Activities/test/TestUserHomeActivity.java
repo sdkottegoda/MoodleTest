@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.jayway.android.robotium.solo.Solo;
 import com.example.Activities.*;
+import com.example.Activities.UserHomeActivity.UserInfo;
 import com.example.moodle.App;
 import com.example.moodle.Client;
 import com.example.moodle.Course;
@@ -57,8 +58,8 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 	
 	//test what happens when the courses imageButton is clicked
 	@Test
-	public void testCoursesClicked(){
-		
+	/*public void testCoursesClicked(){
+		solo.waitForActivity("UserHomeActivity"); 
 		//Courses has the index 2
 		solo.clickOnImageButton(2);
 			
@@ -85,14 +86,19 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 				fail(e.toString());
 			}
 	}
-	
+	*/
 	//test what happens when the profile imageButton is clicked
 	public void testProfileClicked(){
-		
+		System.out.println(solo.getCurrentActivity().toString());
 		//profile has the index 1
 		solo.clickOnImageButton(1);
 		//Wait until next activity starts
-			/*Activity current = solo.getActivityMonitor().waitForActivity();
+
+		solo.getActivityMonitor().waitForActivity();
+			solo.waitForActivity("ProfileActivity",500);
+
+			System.out.println(solo.getCurrentActivity().toString());
+			/*Activity current = solo.getCurrentActivity();
 			Class cu = current.getClass();
 				
 			//the ProfileActivity should start
@@ -100,11 +106,14 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 				Class next = Class.forName("com.example.Activities.ProfileActivity");
 				//The next activity should be the UserHomeActivity
 				assertEquals(next, cu);
+				assertEquals("u1@gmail.com", ((UserInfo)current.getIntent().getExtras().get("userInfo")).getEmail());
 			} catch (ClassNotFoundException e) {
 				//if ProfileActivity class doesn't exist, fail
 				fail(e.toString());
-			}*/
-			
+			}
+			*/
+			solo.assertCurrentActivity(solo.getCurrentActivity().toString(), ProfileActivity.class);
+			assertEquals("u1@gmail.com", ((UserInfo)solo.getCurrentActivity().getIntent().getExtras().get("userInfo")).getEmail());
 			
 	}
 	
