@@ -88,7 +88,15 @@ public class TestClient extends AndroidTestCase{
 	}
 	
 	public void testGetCourseContent(){
-		
+		Client.getInstance().getCourseContent(0);
+	}
+	
+	public void testGetAssignments(){
+		Client.getInstance().getAssignments("3");
+	}
+	
+	public void testsendRequest(){
+		Client.getInstance().sendRequest(Constants.assignmentURL);
 	}
 	
 	public void testGetMyProfile(){

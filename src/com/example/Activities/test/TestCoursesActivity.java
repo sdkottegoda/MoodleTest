@@ -59,7 +59,7 @@ public class TestCoursesActivity extends ActivityInstrumentationTestCase2<Activi
 		
 		
 		//click on the first course
-		solo.clickInList(0);
+		solo.clickInList(1);
 		
 		//Wait until next activity starts
 		Activity current = solo.getActivityMonitor().waitForActivity();

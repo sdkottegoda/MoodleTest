@@ -7,4 +7,5 @@ public final class Constants {
 	public static String domainName = "http://10.0.2.2/Moodle/moodle/";
 	public static String getMyCourses = "moodle_enrol_get_users_courses";
 	public static String course ="{\"id\": \"2\", \"shortname\": \"SE\", \"fullname\": \"Software Engineering\", \"enrolledusercount\": \"1\", \"idnumber\": \"SE2012\", \"visible\": \"1\"}";
+	public static String assignmentURL = "http://10.0.2.2/moodle/moodle/mod/assign/view.php?id=2";
 }
