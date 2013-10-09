@@ -14,6 +14,7 @@ import com.example.moodle.App;
 import com.example.moodle.Client;
 import com.example.moodle.Course;
 import com.example.moodle.User;
+import com.jayway.android.robotium.solo.Solo;
 
 import junit.framework.TestCase;
 
@@ -47,7 +48,7 @@ public class TestClient extends AndroidTestCase{
 		User user = User.getInstance();
 		user.setToken(Constants.token);
 		user.setID(3);
-
+		
 	}
 	
 	@Override
@@ -88,6 +89,12 @@ public class TestClient extends AndroidTestCase{
 	}
 	
 	public void testGetCourseContent(){
+		try {
+			User.getInstance().addCourse(new JSONObject("{\"id\":\"3\",\"shortname\":\"DS\",\"fullname\":\"Database Systems\",\"idnumber\":\"DS2022\"}"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Client.getInstance().getCourseContent(0);
 	}
 	
@@ -95,9 +102,13 @@ public class TestClient extends AndroidTestCase{
 		Client.getInstance().getAssignments("3");
 	}
 	
-	public void testsendRequest(){
-		Client.getInstance().sendRequest(Constants.assignmentURL);
-	}
+	/*public void testsendRequest(){
+		
+		String token = Client.getInstance().doHTTPRequest(Constants.domainName + "/login/token.php?username=u1&password=Uu1@1234&service=moodle_mobile_app");
+		assertEquals(Constants.token, token);
+		String response = Client.getInstance().sendRequest(Constants.assignmentURL,null);
+		assertEquals("dfgdfh", response);
+	}*/
 	
 	public void testGetMyProfile(){
 		JSONObject response = Client.getInstance().getMyProfile();

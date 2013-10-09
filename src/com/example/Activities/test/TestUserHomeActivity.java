@@ -58,7 +58,7 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 	
 	//test what happens when the courses imageButton is clicked
 	@Test
-	/*public void testCoursesClicked(){
+	public void testCoursesClicked(){
 		solo.waitForActivity("UserHomeActivity"); 
 		//Courses has the index 2
 		solo.clickOnImageButton(2);
@@ -86,7 +86,7 @@ public class TestUserHomeActivity extends ActivityInstrumentationTestCase2{
 				fail(e.toString());
 			}
 	}
-	*/
+	
 	//test what happens when the profile imageButton is clicked
 	public void testProfileClicked(){
 		System.out.println(solo.getCurrentActivity().toString());
